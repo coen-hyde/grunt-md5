@@ -29,11 +29,11 @@
     "test": "grunt --base ./test/ --config ./test/grunt.js"
   },
   "dependencies": {
-    "grunt": "~0.3.10"
-  },
-  "devDependencies": {
     "grunt": "~0.3.10",
     "grunt-contrib": "~0.1.7"
+  },
+  "devDependencies": {
+    "grunt-clean": "~0.3.0"
   },
   "keywords": [
     "gruntplugin"

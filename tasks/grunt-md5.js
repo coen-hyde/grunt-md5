@@ -18,7 +18,7 @@ module.exports = function(grunt) {
 
   grunt.registerMultiTask('md5', 'Generate a md5 filename', function() {
     var helpers = require('grunt-lib-contrib').init(grunt);
-
+    
     var options = helpers.options(this, {
       data: {}
     });
@@ -26,7 +26,7 @@ module.exports = function(grunt) {
     grunt.verbose.writeflags(options, 'Options');
 
     // TODO: ditch this when grunt v0.4 is released
-    var files = this.files || grunt.helper('normalizeMultiTaskFiles', this.data, this.target);
+    var files = this.files || helpers.normalizeMultiTaskFiles(this.data, this.target);
     var srcFiles;
     var destDir;
 

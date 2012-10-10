@@ -30,10 +30,11 @@
   },
   "dependencies": {
     "grunt": "~0.3.10",
-    "grunt-contrib": "~0.1.7"
+    "grunt-lib-contrib": "~0.3.0"
   },
   "devDependencies": {
-    "grunt-clean": "~0.3.0"
+    "grunt-clean": "~0.3.0",
+    "grunt-contrib": "~0.1.7"
   },
   "keywords": [
     "gruntplugin"

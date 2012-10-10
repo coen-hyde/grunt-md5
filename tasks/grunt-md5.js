@@ -17,7 +17,11 @@ module.exports = function(grunt) {
   var _ = grunt.util._;
 
   grunt.registerMultiTask('md5', 'Generate a md5 filename', function() {
-    var options = grunt.helper('options', this);
+    var helpers = require('grunt-lib-contrib').init(grunt);
+
+    var options = helpers.options(this, {
+      data: {}
+    });
 
     grunt.verbose.writeflags(options, 'Options');
 

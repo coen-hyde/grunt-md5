@@ -8,6 +8,8 @@
 
 /*global _:true, require:true*/
 
+path = require('path');
+
 module.exports = function(grunt) {
   'use strict';
 
@@ -39,9 +41,7 @@ module.exports = function(grunt) {
         return;
       }
 
-      if (grunt.file.exists(destDir) === false) {
-        grunt.file.mkdir(destDir);
-      }
+      grunt.file.mkdir(destDir);
 
       destDir = grunt.file.expandDirs(destDir)[0];
 
@@ -65,12 +65,15 @@ module.exports = function(grunt) {
           ext = '.' + ext;
         }
       }
+
+      var basename = path.basename(srcFile, ext);
+      
       var filename = require('crypto').
         createHash('md5').
         update(srcCode).
         digest('hex') + ext;
 
-      var destFile = require('path').join(destDir, filename);
+      var destFile = require('path').join(destDir, basename+'_'+filename);
 
       grunt.file.copy(srcFile, destFile);
 

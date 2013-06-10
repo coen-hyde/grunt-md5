@@ -14,8 +14,9 @@ module.exports = function(grunt) {
   // TODO: ditch this when grunt v0.4 is released
   grunt.util = grunt.util || grunt.utils;
 
-  var _ = grunt.util._;
   var path = require('path');
+  var async = grunt.util.async;
+  var _ = grunt.util._;
 
   grunt.registerMultiTask('md5', 'Generate a md5 filename', function() {
     // file object : {newPath: /***/, oldPath: /***/, content: /***/}
@@ -31,14 +32,14 @@ module.exports = function(grunt) {
     // Keep track of processedFiles so we can call the `after` callback if needed.
     var processedFiles = [];
 
-    this.files.forEach(function(filePair) {
+    async.forEach(this.files, function(filePair, done) {
       var isExpandedPair = filePair.orig.expand || false;
 
       if (typeof filePair.src === 'undefined') {
         grunt.fail.warn('Files object doesn\'t exist');
       }
 
-      filePair.src.forEach(function(srcFile) {
+      async.forEach(filePair.src, function(srcFile, done) {
         try {
           var basename = '';
           var destFile;
@@ -86,17 +87,18 @@ module.exports = function(grunt) {
           }
 
           grunt.log.writeln('File \'' + destFile + '\' created.');
+          done();
         } catch(err) {
           grunt.log.error(err);
           grunt.fail.warn('Fail to generate an MD5 file name');
         }
-      });
+      }, done);
+    }, function() {
+      // call `after` if defined
+      if (_.isFunction(options.after)) {
+        options.after.call(context, processedFiles, options);
+      }
     });
-
-    // call `after` if defined
-    if (_.isFunction(options.after)) {
-      options.after.call(context, processedFiles, options);
-    }
   });
 
   // From grunt-contrib-copy
